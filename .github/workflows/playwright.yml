@@ -17,8 +17,15 @@ jobs:
       run: npm ci
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
-    - name: Run Playwright tests
+    - name: Add mask to secrets name
+      run: echo "::add-mask::${{ secrets.USERNAME }}"
+    - name: Add mask to secrets password
+      run: echo "::add-mask::${{ secrets.PASSWORD }}"
+    - name: Run Playwright tests      
       run: npx playwright test
+      env: 
+        USERNAME: '${{ secrets.USERNAME }}'
+        PASSWORD: '${{ secrets.PASSWORD }}'
     - uses: actions/upload-artifact@v4
       if: always()
       with:
