@@ -23,7 +23,7 @@ jobs:
       run: echo "::add-mask::${{ secrets.PASSWORD }}"
     - name: Run Playwright tests on push
       if: github.event_name == 'push'      
-      run: npx playwright test --grep-invert @flaky
+      run: npx playwright test --grep @happycase
       env: 
         USERNAME: '${{ secrets.USERNAME }}'
         PASSWORD: '${{ secrets.PASSWORD }}'
