@@ -40,6 +40,7 @@ test.describe("Contact List", {tag:'@contactList'}, () => {
         await herokuApp.contactDetails.editContactBtn.click();
         await herokuApp.editContact.fill(contacts[2]);
         await herokuApp.editContact.submit();
+        
         await herokuApp.contactDetails.loaded();
         await herokuApp.expectContactDetails.expectToHaveContactDetails(contacts[2]);
         await herokuApp.contactDetails.toContactListBtn.click();
@@ -64,17 +65,17 @@ test.describe("Contact List", {tag:'@contactList'}, () => {
         await herokuApp.expectContactDetails.expectToHaveContactDetails(contacts[4]);
     });
 
-    test("should remove all contacts added in this suite", {tag:'@happycase'}, async ({ page }) => {
+    test("should remove all contacts", {tag:'@happycase'}, async ({ page }) => {
         await herokuApp.contactList.loaded();
         await page.waitForTimeout(1000); // wait for the contacts to load
-        let listOfAddedContacts: Contact[] = [contacts[0], contacts[2], contacts[4]];
-        for (let contact of listOfAddedContacts) {
-            const contactName = `${contact.firstName} ${contact.lastName}`;
-            await herokuApp.contactList.openContactDetailsByName(contactName);
-                console.log('delete contact:', contactName);
+        
+        await herokuApp.contactList.getContactNames().then(async (names) => {
+            for (const name of names) {
+                await herokuApp.contactList.openContactDetailsByName(name);
                 await herokuApp.contactDetails.deleteContact();
                 await herokuApp.contactList.loaded();
-        }
+            }
+        });
 
         await herokuApp.expectContactList.expectToNotHaveContacts();
     });
