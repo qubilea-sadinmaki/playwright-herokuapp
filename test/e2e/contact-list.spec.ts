@@ -48,7 +48,7 @@ test.describe("Contact List", {tag:'@contactList'}, () => {
         await herokuApp.expectContactList.expectToHaveContact(contacts[2]);
     });
 
-    test("should remove contact", {tag:['@happycase','@flaky']}, async ({ page }) => {
+    test("should remove contact", {tag:['@happycase']}, async ({ page }) => {
         await herokuApp.contactList.addContact();
         await herokuApp.addContact.addContact(contacts[3]);
         await herokuApp.contactList.loaded();
@@ -65,7 +65,7 @@ test.describe("Contact List", {tag:'@contactList'}, () => {
         await herokuApp.expectContactDetails.expectToHaveContactDetails(contacts[4]);
     });
 
-    test("should remove all contacts", {tag:'@happycase'}, async ({ page }) => {
+    test("should remove all contacts", {tag:['@happycase','@flaky']}, async ({ page }) => {
         await herokuApp.contactList.loaded();
         await page.waitForTimeout(1000); // wait for the contacts to load
         
